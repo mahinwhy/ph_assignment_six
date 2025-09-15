@@ -6,13 +6,15 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Green Earth</title>
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
 
   <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body class="bg-base-100">
+<body class="bg-base-100 bg-green-50">
 
   <!-- Navbar -->
   <header class="relative z-50">
@@ -81,6 +83,46 @@
 
   <!-- Main -->
   <main>
+    <section class="min-h-screen text-black py-20 px-1">
+      <div class="text-center py-8">
+        <h2 class="text-3xl font-bold text-black">Choose Your Trees</h2>
+      </div>
+
+      <div class="flex flex-col md:flex-row justify-between items-start gap-6 px-8 mx-auto w-full">
+
+        <div class="w-full md:w-1/6 rounded-lg p-4 md:block mb-4">
+          <span class="text-2xl font-bold">Categories</span>
+          <ul id="categories-list" class="space-y-2 py-2">
+          </ul>
+        </div>
+
+
+        <div class="w-full flex-1 md:w-2/4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        </div>
+
+        <div class="w-full md:w-1/6 rounded-lg p-4 bg-white shadow-md">
+          <h3 class="text-2xl font-bold mb-4">Your Cart</h3>
+
+          <div id="cart-items" class="space-y-4">
+          </div>
+
+          <div class="flex justify-between items-center mt-6 pt-4 border-t border-gray-300">
+            <span class="text-lg font-semibold">Total:</span>
+            <span id="cart-total" class="text-xl font-bold">৳0</span>
+          </div>
+
+        </div>
+    </section>
+
+    <div id="cart-modal" class="fixed inset-0 bg-opacity-90 flex items-center justify-center hidden z-50">
+      <div class="bg-white border-3 border-green-600 rounded-lg shadow-lg p-6 max-w-sm w-full text-center">
+        <h3 id="modal-text" class="text-lg font-semibold mb-4">Plant added to cart</h3>
+        <button id="modal-ok" class="bg-green-700 text-white px-6 py-2 rounded-full hover:bg-green-600">
+          Okay
+        </button>
+      </div>
+    </div>
 
   </main>
 
@@ -185,6 +227,168 @@
     menuBtn.addEventListener('click', () => {
       mobileMenu.classList.toggle('hidden');
     });
+
+    const categoriesList = document.getElementById('categories-list');
+    const middleDiv = document.querySelector('.w-full.flex-1');
+
+    async function loadCategories() {
+      const allTreesItem = document.createElement('li');
+      allTreesItem.innerHTML = `<a href="#" class="block p-2 rounded-lg bg-green-700 text-white">All Trees</a>`;
+      categoriesList.appendChild(allTreesItem);
+
+      try {
+        const res = await fetch('https://openapi.programming-hero.com/api/categories');
+        const data = await res.json();
+
+        data.categories.forEach(cat => {
+          const li = document.createElement('li');
+          li.innerHTML = `<a href="#" class="block p-2 rounded-lg text-black hover:bg-green-100 hover:text-green-700" data-id="${cat.id}">${cat.category_name}</a>`;
+          categoriesList.appendChild(li);
+        });
+
+        addCategoryClickEvents();
+
+        const allTreesLink = categoriesList.querySelector('a');
+        allTreesLink.click();
+      } catch (err) {
+        console.error('Failed to fetch categories:', err);
+      }
+    }
+
+    function addCategoryClickEvents() {
+      const items = categoriesList.querySelectorAll('a');
+      items.forEach(item => {
+        item.addEventListener('click', async e => {
+          e.preventDefault();
+
+          items.forEach(i => i.classList.remove('bg-green-700', 'text-white'));
+          items.forEach(i => i.classList.add('text-black'));
+
+          item.classList.add('bg-green-700', 'text-white');
+          item.classList.remove('text-black');
+
+          middleDiv.innerHTML = '';
+
+          let url;
+          if (item.textContent.trim() === 'All Trees') {
+            url = 'https://openapi.programming-hero.com/api/plants';
+          } else {
+            const id = item.getAttribute('data-id');
+            url = `https://openapi.programming-hero.com/api/category/${id}`;
+          }
+
+          try {
+            const res = await fetch(url);
+            const data = await res.json();
+            renderPlants(data);
+          } catch (err) {
+            console.error('Failed to fetch plants:', err);
+          }
+        });
+      });
+    }
+
+    function renderPlants(data) {
+      if (!data || !data.plants) return;
+      data.plants.forEach(plant => {
+        const div = document.createElement('div');
+        div.className = 'w-full max-w-xs bg-white rounded-3xl overflow-hidden shadow-lg mx-auto';
+        div.innerHTML = `
+      <div class="w-full h-56 px-4 pt-4">
+        <img src="${plant.image}" alt="${plant.name}" class="w-full h-full object-cover">
+      </div>
+      <div class="px-4 py-3">
+        <h3 class="text-2xl font-bold text-gray-800 mb-2">${plant.name}</h3>
+        <p class="text-gray-600 text-sm mb-2">${plant.description || ''}</p>
+        <div class="flex justify-between items-center mb-2">
+          <span class="bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full">
+            ${plant.category || 'Unknown'}
+          </span>
+          <span class="text-xl font-bold text-gray-800">
+            ৳${plant.price || 0}
+          </span>
+        </div>
+        <button 
+          class="w-full bg-green-700 text-white font-bold py-1 px-6 rounded-full hover:bg-green-600 transition-colors add-to-cart" 
+          data-id="${plant.id}" 
+          data-name="${plant.name}" 
+          data-price="${plant.price}">
+          Add to Cart
+        </button>
+      </div>
+    `;
+        middleDiv.appendChild(div);
+      });
+    }
+
+    const cart = {};
+    const cartItemsContainer = document.getElementById("cart-items");
+    const cartTotal = document.getElementById("cart-total");
+    const modal = document.getElementById('cart-modal');
+    const modalText = document.getElementById('modal-text');
+    const modalOk = document.getElementById('modal-ok');
+
+    document.addEventListener("click", (e) => {
+      if (e.target.closest(".add-to-cart")) {
+        const btn = e.target.closest(".add-to-cart");
+        const id = btn.dataset.id;
+        const name = btn.dataset.name;
+        const price = parseInt(btn.dataset.price);
+
+        if (!cart[id]) {
+          cart[id] = { name, price, qty: 1 };
+        } else {
+          cart[id].qty++;
+        }
+
+        renderCart();
+        showCartModal(name);
+      }
+
+      if (e.target.closest(".remove-item")) {
+        const id = e.target.closest(".remove-item").dataset.id;
+        delete cart[id];
+        renderCart();
+      }
+    });
+
+    function renderCart() {
+      cartItemsContainer.innerHTML = "";
+      let total = 0;
+
+      Object.keys(cart).forEach(id => {
+        const item = cart[id];
+        total += item.price * item.qty;
+
+        const div = document.createElement("div");
+        div.className = "flex justify-between items-center bg-green-100 p-3 rounded-lg";
+        div.innerHTML = `
+      <div>
+        <span class="block font-semibold">${item.name}</span>
+        <span class="text-sm text-gray-700">৳${item.price} × ${item.qty}</span>
+      </div>
+      <button data-id="${id}" class="remove-item ml-4 text-gray-400 hover:text-red-500 transition-transform transform hover:scale-125">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    `;
+        cartItemsContainer.appendChild(div);
+      });
+
+      cartTotal.textContent = `৳${total}`;
+    }
+
+    function showCartModal(plantName) {
+      modalText.textContent = `${plantName} has been added to the cart`;
+      modal.classList.remove('hidden');
+    }
+
+    modalOk.onclick = () => modal.classList.add('hidden');
+    modal.onclick = (e) => {
+      if (e.target === modal) modal.classList.add('hidden');
+    };
+
+    loadCategories();
+
   </script>
 </body>
 
