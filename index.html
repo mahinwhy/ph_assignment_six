@@ -1,11 +1,59 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Green Earth</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Green Earth — Navbar</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-<body>
-    
+<body class="bg-base-100">
+
+  <header class="relative">
+    <nav class="bg-green-700 text-white px-4 sm:px-6 lg:px-8 py-3
+                flex items-center justify-between md:grid md:grid-cols-3 md:items-center">
+      
+      <div>
+        <a href="#" class="text-lg md:text-2xl font-bold">Green Earth</a>
+      </div>
+
+      <div class="hidden md:flex justify-center">
+        <ul class="flex gap-8 text-base">
+          <li><a href="https://web.programming-hero.com/web-12/assignment/web-12-assignment-6" class="hover:text-yellow-300">Home</a></li>
+          <li><a href="https://web.programming-hero.com/web-12/assignment/web-12-assignment-6" class="hover:text-yellow-300">Gallery</a></li>
+          <li><a href="https://web.programming-hero.com/web-12/assignment/web-12-assignment-6" class="hover:text-yellow-300">Plant a Tree</a></li>
+        </ul>
+      </div>
+
+      <div class="flex justify-end">
+        <button class="hidden md:inline-flex btn bg-yellow-400 text-green-800 rounded-full px-6 border-none hover:bg-yellow-300">
+          Plant a Tree
+        </button>
+
+        <button id="menu-btn" class="md:hidden btn btn-ghost p-2">
+          ☰
+        </button>
+      </div>
+    </nav>
+
+    <div id="mobile-menu" class="hidden md:hidden absolute right-4 top-full mt-2 bg-green-600 text-white p-3 rounded-box w-48">
+      <a class="block p-2 rounded hover:bg-green-500" href="https://web.programming-hero.com/web-12/assignment/web-12-assignment-6">Home</a>
+      <a class="block p-2 rounded hover:bg-green-500" href="https://web.programming-hero.com/web-12/assignment/web-12-assignment-6">Gallery</a>
+      <a class="block p-2 rounded hover:bg-green-500" href="https://web.programming-hero.com/web-12/assignment/web-12-assignment-6">Plant a Tree</a>
+      <button class="btn w-full mt-3 bg-yellow-400 text-green-800 rounded-full border-none hover:bg-yellow-300">
+        Plant a Tree
+      </button>
+    </div>
+  </header>
+
+  <script>
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+  </script>
 </body>
 </html>
