@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Green Earth</title>
 
-  <!-- DaisyUI + Tailwind -->
   <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
@@ -42,7 +41,6 @@
       </div>
     </nav>
 
-    <!-- Mobile menu -->
     <div id="mobile-menu"
       class="hidden md:hidden absolute right-4 top-full mt-2 bg-green-600 text-white p-3 rounded-box w-48">
       <a class="block p-2 rounded hover:bg-green-500" href="#">Home</a>
@@ -54,38 +52,38 @@
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <section class="relative bg-green-100 py-16 px-6 text-center overflow-hidden">
-    <!-- Header -->
-    <h1 class="text-4xl font-bold text-gray-800 mb-6 relative z-10">
-      Plant a Tree, Grow a Future
-    </h1>
+  <!-- Hero -->
+<section class="relative bg-green-100 py-2 px-1 overflow-hidden">
+  <div class="flex justify-center items-center gap-1 mx-auto flex-wrap">
 
-    <!-- Middle row with leaves + text -->
-    <div class="relative flex items-center justify-center max-w-4xl mx-auto">
-      <!-- Left leaf -->
-      <div class="hidden md:block flex-1">
-        <img src="../assets/hero-leaf1.png" alt="Leaf Left" class="w-40 mx-auto object-contain">
-      </div>
-
-      <!-- Text -->
-      <p class="flex-1 text-lg text-gray-700 px-4 relative z-10">
-        Join our mission to plant 1 million trees and make the Earth greener for future generations.
-      </p>
-
-      <!-- Right leaf -->
-      <div class="hidden md:block flex-1">
-        <img src="../assets/hero-leaf2.png" alt="Leaf Right" class="w-40 mx-auto object-contain">
-      </div>
+    <div class="hidden md:block flex-shrink-0">
+      <img src="../assets/hero-leaf1.png" alt="Leaf Left" class="w-60 md:w-90 h-50 md:h-70 object-contain">
     </div>
 
-    <!-- Button -->
-    <div class="mt-8 relative z-10">
+    <div class="flex flex-col items-center text-center space-y-6 px-4 md:px-0">
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-800">
+        Plant a Tree, Grow a Future
+      </h1>
+      <p class="text-lg md:text-xl text-gray-700 max-w-2xl">
+        Join our mission to plant 1 million trees and make the Earth greener for future generations.
+      </p>
       <button class="btn bg-yellow-400 text-green-800 font-bold rounded-full px-8 border-none hover:bg-yellow-300">
         Get Involved
       </button>
     </div>
-  </section>
+
+    <div class="hidden md:block flex-shrink-0">
+      <img src="../assets/hero-leaf2.png" alt="Leaf Right" class="w-60 md:w-90 h-50 md:h-70 object-contain">
+    </div>
+
+  </div>
+</section>
+
+
+
+
+
+
 
 
   <script>
