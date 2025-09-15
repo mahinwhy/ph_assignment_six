@@ -15,7 +15,7 @@
 <body class="bg-base-100">
 
   <!-- Navbar -->
-<header class="relative z-50">
+  <header class="relative z-50">
     <nav class="bg-green-700 text-white px-4 sm:px-6 lg:px-8 py-3
                 flex items-center justify-between md:grid md:grid-cols-3 md:items-center">
 
@@ -53,38 +53,86 @@
   </header>
 
   <!-- Hero -->
-<section class="relative bg-green-100 py-2 px-1 overflow-hidden">
-  <div class="flex justify-center items-center gap-1 mx-auto flex-wrap">
+  <section class="relative bg-green-100 py-2 px-1 overflow-hidden">
+    <div class="flex justify-center items-center gap-1 mx-auto flex-wrap">
 
-    <div class="hidden md:block flex-shrink-0">
-      <img src="../assets/hero-leaf1.png" alt="Leaf Left" class="w-60 md:w-90 h-50 md:h-70 object-contain">
+      <div class="hidden md:block flex-shrink-0">
+        <img src="../assets/hero-leaf1.png" alt="Leaf Left" class="w-60 md:w-90 h-50 md:h-70 object-contain">
+      </div>
+
+      <div class="flex flex-col items-center text-center space-y-6 px-4 md:px-0">
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-800">
+          Plant a Tree, Grow a Future
+        </h1>
+        <p class="text-lg md:text-xl text-gray-700 max-w-2xl">
+          Join our mission to plant 1 million trees and make the Earth greener for future generations.
+        </p>
+        <button class="btn bg-yellow-400 text-green-800 font-bold rounded-full px-8 border-none hover:bg-yellow-300">
+          Get Involved
+        </button>
+      </div>
+
+      <div class="hidden md:block flex-shrink-0">
+        <img src="../assets/hero-leaf2.png" alt="Leaf Right" class="w-60 md:w-90 h-50 md:h-70 object-contain">
+      </div>
+
     </div>
+  </section>
 
-    <div class="flex flex-col items-center text-center space-y-6 px-4 md:px-0">
-      <h1 class="text-4xl md:text-5xl font-bold text-gray-800">
-        Plant a Tree, Grow a Future
-      </h1>
-      <p class="text-lg md:text-xl text-gray-700 max-w-2xl">
-        Join our mission to plant 1 million trees and make the Earth greener for future generations.
-      </p>
-      <button class="btn bg-yellow-400 text-green-800 font-bold rounded-full px-8 border-none hover:bg-yellow-300">
-        Get Involved
-      </button>
+  <!-- Main -->
+  <main>
+
+  </main>
+
+  <!-- About Campaign -->
+  <section>
+
+  </section>
+
+  <!-- Impact -->
+  <section>
+
+  </section>
+
+  <!-- Donation -->
+  <section class="bg-green-800 flex items-center justify-center py-10 px-8 sm:py-12 sm:px-8">
+    <div class="text-center py-4 w-full max-w-md lg:max-w-xl space-y-6">
+      <h2 class="text-white text-2xl md:text-3xl font-semibold">
+        Plant a Tree Today
+      </h2>
+
+      <div class="bg-green-700 p-4 sm:p-8 rounded-2xl">
+        <form class="flex flex-col space-y-4">
+          <input type="text" placeholder="Your Name"
+            class="w-full p-3 rounded-lg bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-300">
+
+          <input type="email" placeholder="Your Email Address"
+            class="w-full p-3 rounded-lg bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-300">
+
+          <select
+            class="w-full p-3 rounded-lg bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-300">
+            <option value="" disabled selected hidden>Number of Trees</option>
+            <option value="1">1 Tree</option>
+            <option value="5">5 Trees</option>
+            <option value="10">10 Trees</option>
+            <option value="50">50 Trees</option>
+            <option value="100">100 Trees</option>
+          </select>
+
+          <button type="submit"
+            class="w-full bg-yellow-400 text-green-900 font-bold py-3 rounded-full hover:bg-yellow-300 transition-colors">
+            Donate Now
+          </button>
+        </form>
+      </div>
     </div>
-
-    <div class="hidden md:block flex-shrink-0">
-      <img src="../assets/hero-leaf2.png" alt="Leaf Right" class="w-60 md:w-90 h-50 md:h-70 object-contain">
-    </div>
-
-  </div>
-</section>
+  </section>
 
 
-
-
-
-
-
+  <!-- Footer -->
+  <footer class="bg-[#14532d] h-18 md:h-18 flex items-center justify-center">
+    <span class="text-white text-[16px]">© 2025 Green Earth. All Rights Reserved.</span>
+  </footer>
 
   <script>
     const menuBtn = document.getElementById('menu-btn');
