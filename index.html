@@ -116,7 +116,7 @@
     </section>
 
     <div id="cart-modal" class="fixed inset-0 bg-opacity-90 flex items-center justify-center hidden z-50">
-      <div class="bg-white border-3 border-green-600 rounded-lg shadow-lg p-6 max-w-sm w-full text-center">
+      <div class="bg-white border-4 border-green-600 rounded-lg shadow-lg p-6 max-w-sm w-full text-center">
         <h3 id="modal-text" class="text-lg font-semibold mb-4">Plant added to cart</h3>
         <button id="modal-ok" class="bg-green-700 text-white px-6 py-2 rounded-full hover:bg-green-600">
           Okay
@@ -222,213 +222,205 @@
   </footer>
 
 
-  <!-- Loading -->
-<div id="loading-spinner" class="fixed inset-0 flex items-center justify-center hidden z-50">
-  <div class="w-16 h-16 border-4 border-green-700 border-t-transparent rounded-full animate-spin"></div>
-</div>
-
-
-  <!-- Modal -->
-  <div id="tree-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
-    <div class="bg-white rounded-3xl shadow-lg p-6 max-w-md w-full relative">
-      <h3 id="tree-modal-name" class="text-2xl font-bold mb-4"></h3>
-      <img id="tree-modal-img" src="" alt="" class="w-full h-64 object-cover rounded-xl mb-4">
-      <p><span class="font-semibold">Category:</span> <span id="tree-modal-category"></span></p>
-      <p><span class="font-semibold">Price:</span> ৳<span id="tree-modal-price"></span></p>
-      <p class="mt-2 text-gray-700" id="tree-modal-description"></p>
-      <button id="tree-modal-close"
-        class="absolute bottom-4 right-4 bg-green-700 text-white px-4 py-2 rounded-full hover:bg-green-600">
-        Close
-      </button>
+  <!-- Tree Modal -->
+  <div id="tree-modal" class="fixed inset-0 flex items-center justify-center hidden z-50">
+    <div id="tree-modal-content" class="bg-white rounded-lg shadow-lg p-6 max-w-lg w-full relative">
     </div>
   </div>
 
+  <!-- Loading -->
+  <div id="spinner" class="fixed inset-0 flex items-center justify-center hidden z-50">
+    <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-green-700"></div>
+  </div>
 
-<script>
-  const menuBtn = document.getElementById('menu-btn');
-  const mobileMenu = document.getElementById('mobile-menu');
-  const categoriesList = document.getElementById('categories-list');
-  const middleDiv = document.querySelector('.w-full.flex-1');
-  const spinner = document.getElementById('loading-spinner');
 
-  // Spinner helpers
-  function showSpinner() { spinner.classList.remove('hidden'); }
-  function hideSpinner() { spinner.classList.add('hidden'); }
 
-  menuBtn.addEventListener('click', () => {
-    mobileMenu.classList.toggle('hidden');
-  });
+  <script>
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const categoriesList = document.getElementById('categories-list');
+    const middleDiv = document.querySelector('.w-full.flex-1');
 
-  async function loadCategories() {
-    showSpinner(); // show spinner
-    const allTreesItem = document.createElement('li');
-    allTreesItem.innerHTML = `<a href="#" class="block p-2 rounded-lg bg-green-700 text-white">All Trees</a>`;
-    categoriesList.appendChild(allTreesItem);
-
-    try {
-      const res = await fetch('https://openapi.programming-hero.com/api/categories');
-      const data = await res.json();
-
-      data.categories.forEach(cat => {
-        const li = document.createElement('li');
-        li.innerHTML = `<a href="#" class="block p-2 rounded-lg text-black hover:bg-green-100 hover:text-green-700" data-id="${cat.id}">${cat.category_name}</a>`;
-        categoriesList.appendChild(li);
-      });
-
-      addCategoryClickEvents();
-
-      const allTreesLink = categoriesList.querySelector('a');
-      allTreesLink.click();
-    } catch (err) {
-      console.error('Failed to fetch categories:', err);
-    } finally {
-      hideSpinner(); // hide spinner
-    }
-  }
-
-  function addCategoryClickEvents() {
-    const items = categoriesList.querySelectorAll('a');
-    items.forEach(item => {
-      item.addEventListener('click', async e => {
-        e.preventDefault();
-        items.forEach(i => i.classList.remove('bg-green-700', 'text-white'));
-        items.forEach(i => i.classList.add('text-black'));
-        item.classList.add('bg-green-700', 'text-white');
-        item.classList.remove('text-black');
-
-        middleDiv.innerHTML = '';
-        showSpinner(); // show spinner before loading plants
-
-        let url;
-        if (item.textContent.trim() === 'All Trees') {
-          url = 'https://openapi.programming-hero.com/api/plants';
-        } else {
-          const id = item.getAttribute('data-id');
-          url = `https://openapi.programming-hero.com/api/category/${id}`;
-        }
-
-        try {
-          const res = await fetch(url);
-          const data = await res.json();
-          renderPlants(data);
-        } catch (err) {
-          console.error('Failed to fetch plants:', err);
-        } finally {
-          hideSpinner(); // hide spinner after loading
-        }
-      });
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
     });
-  }
 
-  function renderPlants(data) {
-    if (!data || !data.plants) return;
-    data.plants.forEach(plant => {
-      const div = document.createElement('div');
-      div.className = 'w-full max-w-xs bg-white rounded-3xl overflow-hidden shadow-lg mx-auto';
-      div.innerHTML = `
-        <div class="w-full h-56 px-4 pt-4">
-          <img src="${plant.image}" alt="${plant.name}" class="w-full h-full object-cover">
-        </div>
-        <div class="px-4 py-3">
-          <h3 class="text-2xl font-bold text-gray-800 mb-2 plant-name" data-id="${plant.id}">${plant.name}</h3>
-          <p class="text-gray-600 text-sm mb-2">${plant.description || ''}</p>
-          <div class="flex justify-between items-center mb-2">
-            <span class="bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full">
-              ${plant.category || 'Unknown'}
-            </span>
-            <span class="text-xl font-bold text-gray-800">
-              ৳${plant.price || 0}
-            </span>
-          </div>
-          <button 
-            class="w-full bg-green-700 text-white font-bold py-1 px-6 rounded-full hover:bg-green-600 transition-colors add-to-cart" 
-            data-id="${plant.id}" 
-            data-name="${plant.name}" 
-            data-price="${plant.price}">
-            Add to Cart
-          </button>
-        </div>
-      `;
-      middleDiv.appendChild(div);
-    });
-  }
-
-  const treeModal = document.getElementById('tree-modal');
-  const treeModalName = document.getElementById('tree-modal-name');
-  const treeModalImg = document.getElementById('tree-modal-img');
-  const treeModalCategory = document.getElementById('tree-modal-category');
-  const treeModalPrice = document.getElementById('tree-modal-price');
-  const treeModalDescription = document.getElementById('tree-modal-description');
-  const treeModalClose = document.getElementById('tree-modal-close');
-
-  document.addEventListener("click", async (e) => {
-    // Click on tree name
-    if (e.target.classList.contains("plant-name")) {
-      const id = e.target.dataset.id;
+    async function loadCategories() {
       showSpinner();
-      try {
-        const res = await fetch(`https://openapi.programming-hero.com/api/plant/${id}`);
-        const data = await res.json();
-        const plant = data.data;
+      const allTreesItem = document.createElement('li');
+      allTreesItem.innerHTML = `<a href="#" class="block p-2 rounded-lg bg-green-700 text-white">All Trees</a>`;
+      categoriesList.appendChild(allTreesItem);
 
-        treeModalName.textContent = plant.name;
-        treeModalImg.src = plant.image;
-        treeModalCategory.textContent = plant.category || 'Unknown';
-        treeModalPrice.textContent = plant.price || 0;
-        treeModalDescription.textContent = plant.description || 'No description available';
-        treeModal.classList.remove('hidden');
+      try {
+        const res = await fetch('https://openapi.programming-hero.com/api/categories');
+        const data = await res.json();
+
+        data.categories.forEach(cat => {
+          const li = document.createElement('li');
+          li.innerHTML = `<a href="#" class="block p-2 rounded-lg text-black hover:bg-green-100 hover:text-green-700" data-id="${cat.id}">${cat.category_name}</a>`;
+          categoriesList.appendChild(li);
+        });
+
+        addCategoryClickEvents();
+
+        const allTreesLink = categoriesList.querySelector('a');
+        allTreesLink.click();
       } catch (err) {
-        console.error('Failed to fetch plant info:', err);
+        console.error('Failed to fetch categories:', err);
       } finally {
         hideSpinner();
       }
     }
 
-    // Close modal
-    if (e.target === treeModal || e.target === treeModalClose) {
-      treeModal.classList.add('hidden');
+    function addCategoryClickEvents() {
+      const items = categoriesList.querySelectorAll('a');
+      items.forEach(item => {
+        item.addEventListener('click', async e => {
+          e.preventDefault();
+          items.forEach(i => i.classList.remove('bg-green-700', 'text-white'));
+          items.forEach(i => i.classList.add('text-black'));
+          item.classList.add('bg-green-700', 'text-white');
+          item.classList.remove('text-black');
+
+          middleDiv.innerHTML = '';
+          showSpinner();
+
+          let url;
+          if (item.textContent.trim() === 'All Trees') {
+            url = 'https://openapi.programming-hero.com/api/plants';
+          } else {
+            const id = item.getAttribute('data-id');
+            url = `https://openapi.programming-hero.com/api/category/${id}`;
+          }
+
+          try {
+            const res = await fetch(url);
+            const data = await res.json();
+            renderPlants(data);
+          } catch (err) {
+            console.error('Failed to fetch plants:', err);
+          } finally {
+            hideSpinner();
+          }
+        });
+      });
     }
-  });
 
-  const cart = {};
-  const cartItemsContainer = document.getElementById("cart-items");
-  const cartTotal = document.getElementById("cart-total");
-  const modal = document.getElementById('cart-modal');
-  const modalText = document.getElementById('modal-text');
-  const modalOk = document.getElementById('modal-ok');
-
-  document.addEventListener("click", (e) => {
-    if (e.target.closest(".add-to-cart")) {
-      const btn = e.target.closest(".add-to-cart");
-      const id = btn.dataset.id;
-      const name = btn.dataset.name;
-      const price = parseInt(btn.dataset.price);
-
-      if (!cart[id]) cart[id] = { name, price, qty: 1 };
-      else cart[id].qty++;
-
-      renderCart();
-      showCartModal(name);
+    function renderPlants(data) {
+      if (!data || !data.plants) return;
+      data.plants.forEach(plant => {
+        const div = document.createElement('div');
+        div.className = 'w-full max-w-xs bg-white rounded-3xl overflow-hidden shadow-lg mx-auto';
+        div.innerHTML = `
+      <div class="w-full h-56 px-4 pt-4">
+        <img src="${plant.image}" alt="${plant.name}" class="w-full h-full object-cover">
+      </div>
+      <div class="px-4 py-3">
+        <span 
+          onclick="fetchTreeDetails(${plant.id})"
+          class="text-2xl font-bold text-gray-800 mb-2 block cursor-pointer hover:text-green-600">
+          ${plant.name}
+        </span>
+        <p class="text-gray-600 text-sm mb-2">${plant.description || ''}</p>
+        <div class="flex justify-between items-center mb-2">
+          <span class="bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full">
+            ${plant.category || 'Unknown'}
+          </span>
+          <span class="text-xl font-bold text-gray-800">
+            ৳${plant.price || 0}
+          </span>
+        </div>
+        <button 
+          class="w-full bg-green-700 text-white font-bold py-1 px-6 rounded-full hover:bg-green-600 transition-colors add-to-cart" 
+          data-id="${plant.id}" 
+          data-name="${plant.name}" 
+          data-price="${plant.price}">
+          Add to Cart
+        </button>
+      </div>
+    `;
+        middleDiv.appendChild(div);
+      });
     }
 
-    if (e.target.closest(".remove-item")) {
-      const id = e.target.closest(".remove-item").dataset.id;
-      delete cart[id];
-      renderCart();
+    async function fetchTreeDetails(id) {
+      showSpinner();
+      try {
+        const res = await fetch(`https://openapi.programming-hero.com/api/plant/${id}`);
+        const data = await res.json();
+
+        if (data.status && data.plants) {
+          const plant = data.plants;
+
+          const content = `
+        <h2 class="text-2xl font-bold mb-4">${plant.name}</h2>
+        <img src="${plant.image}" alt="${plant.name}" class="w-full h-48 object-cover rounded mb-4">
+        <p><strong>Category:</strong> ${plant.category}</p>
+        <p><strong>Price:</strong> ৳${plant.price}</p>
+        <p class="mt-2">${plant.description}</p>
+        <br><br>
+        <button id="closeDetailsModal"
+          class="absolute bottom-4 right-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-red-700">
+          Close
+        </button>
+      `;
+
+          document.getElementById("tree-modal-content").innerHTML = content;
+          document.getElementById("tree-modal").classList.remove("hidden");
+
+          document.getElementById("closeDetailsModal").addEventListener("click", () => {
+            document.getElementById("tree-modal").classList.add("hidden");
+          });
+        } else {
+          console.error("Plant details not found");
+        }
+      } catch (error) {
+        console.error("Error fetching tree details:", error);
+      } finally {
+        hideSpinner();
+      }
     }
-  });
 
-  function renderCart() {
-    cartItemsContainer.innerHTML = "";
-    let total = 0;
 
-    Object.keys(cart).forEach(id => {
-      const item = cart[id];
-      total += item.price * item.qty;
+    const cart = {};
+    const cartItemsContainer = document.getElementById("cart-items");
+    const cartTotal = document.getElementById("cart-total");
+    const modal = document.getElementById('cart-modal');
+    const modalText = document.getElementById('modal-text');
+    const modalOk = document.getElementById('modal-ok');
 
-      const div = document.createElement("div");
-      div.className = "flex justify-between items-center bg-green-100 p-3 rounded-lg";
-      div.innerHTML = `
+    document.addEventListener("click", (e) => {
+      if (e.target.closest(".add-to-cart")) {
+        const btn = e.target.closest(".add-to-cart");
+        const id = btn.dataset.id;
+        const name = btn.dataset.name;
+        const price = parseInt(btn.dataset.price);
+
+        if (!cart[id]) cart[id] = { name, price, qty: 1 };
+        else cart[id].qty++;
+
+        renderCart();
+        showCartModal(name);
+      }
+
+      if (e.target.closest(".remove-item")) {
+        const id = e.target.closest(".remove-item").dataset.id;
+        delete cart[id];
+        renderCart();
+      }
+    });
+
+    function renderCart() {
+      cartItemsContainer.innerHTML = "";
+      let total = 0;
+
+      Object.keys(cart).forEach(id => {
+        const item = cart[id];
+        total += item.price * item.qty;
+
+        const div = document.createElement("div");
+        div.className = "flex justify-between items-center bg-green-100 p-3 rounded-lg";
+        div.innerHTML = `
         <div>
           <span class="block font-semibold">${item.name}</span>
           <span class="text-sm text-gray-700">৳${item.price} × ${item.qty}</span>
@@ -437,23 +429,29 @@
           <i class="fa-solid fa-xmark"></i>
         </button>
       `;
-      cartItemsContainer.appendChild(div);
-    });
+        cartItemsContainer.appendChild(div);
+      });
 
-    cartTotal.textContent = `৳${total}`;
-  }
+      cartTotal.textContent = `৳${total}`;
+    }
 
-  function showCartModal(plantName) {
-    modalText.textContent = `${plantName} has been added to the cart`;
-    modal.classList.remove('hidden');
-  }
+    function showCartModal(plantName) {
+      modalText.textContent = `${plantName} has been added to the cart`;
+      modal.classList.remove('hidden');
+    }
 
-  modalOk.onclick = () => modal.classList.add('hidden');
-  modal.onclick = (e) => { if (e.target === modal) modal.classList.add('hidden'); };
+    modalOk.onclick = () => modal.classList.add('hidden');
+    modal.onclick = (e) => { if (e.target === modal) modal.classList.add('hidden'); };
 
-  // Initial load
-  loadCategories();
-</script>
+    function showSpinner() {
+      document.getElementById("spinner").classList.remove("hidden");
+    }
+    function hideSpinner() {
+      document.getElementById("spinner").classList.add("hidden");
+    }
+
+    loadCategories();
+  </script>
 
 </body>
 
