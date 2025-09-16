@@ -19,23 +19,19 @@
 Arrow functions are a simpler way of writing functions.  
 They do not support the `arguments` object and `this` works differently compared to normal functions.  
 
-```js
         const add = (a, b) => a + b;
-```js
+
 
 ## 4) How does destructuring assignment work in ES6?
 
 Destructuring assignment allow initializing multiple variable from array or object. It is a clean and readable way of extracting data from array or object.
 
-```js
         const num = [1, 2, 3];
         const [a, b] = num; // a = 1, b = 2
-```js
        
 ## 5) Explain template literals in ES6. How are they different from string concatenation?
 
 Template literals provide us a more readable code while making a string. It will allow us use variable without using "+" and will allow us to write multiline strings. We have to use (`) instead of (") or (').
 
-```js
         const sub = 'World';
         const greeting = `Hello ${sub}!`; //Hello World!
