@@ -1,33 +1,3 @@
-1) What is the difference between var, let, and const?
-
-        let: We can reassign value anywhere. Can be decleared without initialized.
-        const: We can not reassign value in the same scope. We can modify elements of array and object.
-        var: We can reassign value anywhere also re-initialize it anywhere.
-
-2) What is the difference between map(), forEach(), and filter()?
-        
-        map(): It is used for transforming an array. Returns a new array with transformed elements.
-        forEach(): It can be used when we want to performe any function on all elements of a loop. It is simplly a loop.
-        filter(): It can be used for selectiong or filtering elements from an array. Returns an array with selected elements.
-
-3) What are arrow functions in ES6?
-        
-        Arrow function is a simpller version of writing function. But it does not support "arguments" object and "this" does not work here like normal function.
-                const add = (a, b) => a + b;
-
-4) How does destructuring assignment work in ES6?
-
-        Destructuring assignment allow initializing multiple variable from array or object. It is a clean and readable way of extracting data from array or object.
-                const num = [1, 2, 3];
-                const [a, b] = num; // a = 1, b = 2
-       
-5) Explain template literals in ES6. How are they different from string concatenation?
-
-        Template literals provide us a more readable code while making a string. It will allow us use variable without using "+" and will allow us to write multiline strings. We have to use (`) instead of (") or (').
-                const sub = 'World';
-                const greeting = `Hello ${sub}!`; //Hello World!
-
-
 ## 1) What is the difference between `var`, `let`, and `const`?
 
 - **let**: We can reassign value anywhere. Can be declared without being initialized.  
@@ -50,16 +20,22 @@ Arrow functions are a simpler way of writing functions.
 They do not support the `arguments` object and `this` works differently compared to normal functions.  
 
 ```js
-const add = (a, b) => a + b;
+        const add = (a, b) => a + b;
+```js
 
 ## 4) How does destructuring assignment work in ES6?
 
-        Destructuring assignment allow initializing multiple variable from array or object. It is a clean and readable way of extracting data from array or object.
-                const num = [1, 2, 3];
-                const [a, b] = num; // a = 1, b = 2
+Destructuring assignment allow initializing multiple variable from array or object. It is a clean and readable way of extracting data from array or object.
+
+```js
+        const num = [1, 2, 3];
+        const [a, b] = num; // a = 1, b = 2
+```js
        
 ## 5) Explain template literals in ES6. How are they different from string concatenation?
 
-        Template literals provide us a more readable code while making a string. It will allow us use variable without using "+" and will allow us to write multiline strings. We have to use (`) instead of (") or (').
-                const sub = 'World';
-                const greeting = `Hello ${sub}!`; //Hello World!
+Template literals provide us a more readable code while making a string. It will allow us use variable without using "+" and will allow us to write multiline strings. We have to use (`) instead of (") or (').
+
+```js
+        const sub = 'World';
+        const greeting = `Hello ${sub}!`; //Hello World!
