@@ -1,169 +1,65 @@
-## WELCOME TO ( সহজ সরল সিম্পল ) ASSIGNMENT-006
+1) What is the difference between var, let, and const?
 
-### 📅 Deadline For 60 marks: 9th September, 2025 (11:59 pm ⏱️)
+        let: We can reassign value anywhere. Can be decleared without initialized.
+        const: We can not reassign value in the same scope. We can modify elements of array and object.
+        var: We can reassign value anywhere also re-initialize it anywhere.
 
-### 📅 Deadline For 50 marks : 13th September , 2025 (6:00 pm⏱️)
-
-### 📅 Deadline For 30 marks: Any time after 13the September , 2025 (6:01 pm⏱️).
-
----
-# Green Earth
-
-
-## Private Repository: https://classroom.github.com/a/nVZrg5R9 
-
-## Alternative Private Repository: https://classroom.github.com/a/KCGI14ST 
-
-## Alternative Private Repository: https://classroom.github.com/a/JMuIYqgK 
-
-
----
-🌴 API Endpoints
----
-1. Get 🌴All Plants
-```bash
-https://openapi.programming-hero.com/api/plants
-```
-
-2. Get 🌴All categories <br/>
-```bash
-https://openapi.programming-hero.com/api/categories
-```
-
-
-3. Get 🌴plants by categories <br/>
-```bash
-https://openapi.programming-hero.com/api/category/${id}
-```
-
-```bash
-https://openapi.programming-hero.com/api/category/1
-```
-
-4. Get 🌴Plants Detail <br/>
-
-```bash
-https://openapi.programming-hero.com/api/plant/${id}
-```
-
-```bash
-https://openapi.programming-hero.com/api/plant/1
-```
----
-
-
-
-
-## ✅ Main Requirements 
-
-#### 1) Navbar
-
-- Website **logo/name** on the **left**  
-- **Menu items** in the **center** 
-- **Plant a Tree button** on the **right** 
-
-#### 2) Banner 
-- A **background image**  
-- A **title** and **subtitle**  
-- A **centered button**  
-
-#### 3) About Campaign
-- **Section heading**  
-- **Image on the left**, **text on the right**  
-
-#### 4) Our Impact Section 
-- Show **3 cards** with campaign **statistics**  
-
-#### 5) Plant a Tree Today Section & Footer
-- **Form**: Name, Email, Number of Trees  
-- **Footer** with copyright info 
-
-#### 6) Responsiveness 
-- Website must be **mobile responsive**  
-
----
-#### 7) Create a README file to answer the following question-
-
-
-#### 1) What is the difference between var, let, and const?
-
-#### 2) What is the difference between map(), forEach(), and filter()? 
-
-#### 3) What are arrow functions in ES6?
-
-#### 4) How does destructuring assignment work in ES6?
-
-#### 5) Explain template literals in ES6. How are they different from string concatenation?
-
-## ⚙️ Functionalities 
-
-1) Category Loading 
-Load Tree Categories dynamically on the left side.
-
-2) Category Click → Tree Data 
-On clicking a category: load trees of that category.
-
-Display in a 3-column card layout.
-
-3) Card Contents 
- Each card includes:
-
-        - Image
-
-        -  Name
-
-        - Short description
-
-        - Category
-
-        - Price
-
-        - Add to Cart button
-
-4) Modal on Card Click 
-Clicking a tree name on a card opens a modal with full tree details.
-
-
-##  🧪 Challenges 
-
-
-    1) Add to Cart 
-    Clicking Add to Cart: - Adds the tree to Cart List
-                          - Shows tree name 
-
-    2) Total Calculation 
-    Calculate total price of trees in cart.
-
-    3) Remove from Cart 
-    Clicking ❌ removes tree and deducts price from total.
-
-    4) Loading Spinner
-    Show spinner while data is loading.
-
-    5) Active Button State 
-    Highlight active category button when selected.
-
-
-
-🧰 Technology Stack:
+2) What is the difference between map(), forEach(), and filter()?
         
-        HTML
+        map(): It is used for transforming an array. Returns a new array with transformed elements.
+        forEach(): It can be used when we want to performe any function on all elements of a loop. It is simplly a loop.
+        filter(): It can be used for selectiong or filtering elements from an array. Returns an array with selected elements.
 
-        CSS (Vanilla / Tailwind / DaisyUI)
+3) What are arrow functions in ES6?
+        
+        Arrow function is a simpller version of writing function. But it does not support "arguments" object and "this" does not work here like normal function.
+                const add = (a, b) => a + b;
 
-        JavaScript (Vanilla only, no frameworks)
+4) How does destructuring assignment work in ES6?
 
-📌 Rules
-✅ At least 5 meaningful commits
+        Destructuring assignment allow initializing multiple variable from array or object. It is a clean and readable way of extracting data from array or object.
+                const num = [1, 2, 3];
+                const [a, b] = num; // a = 1, b = 2
+       
+5) Explain template literals in ES6. How are they different from string concatenation?
 
-❌ No dummy text or Lorem Ipsum — must use relevant content
+        Template literals provide us a more readable code while making a string. It will allow us use variable without using "+" and will allow us to write multiline strings. We have to use (`) instead of (") or (').
+                const sub = 'World';
+                const greeting = `Hello ${sub}!`; //Hello World!
 
 
+## 1) What is the difference between `var`, `let`, and `const`?
 
-
-
-## 🔗 Submission
-- **Live Link :** YOUR_DEPLOYED_URL_HERE  
-- **GitHub Private Repository:** YOUR_REPO_URL_HERE  
+- **let**: We can reassign value anywhere. Can be declared without being initialized.  
+- **const**: We cannot reassign value in the same scope, but we can modify elements of arrays and objects.  
+- **var**: We can reassign and re-initialize it anywhere.  
 
 ---
+
+## 2) What is the difference between `map()`, `forEach()`, and `filter()`?
+
+- **map()**: Used for transforming an array. Returns a new array with transformed elements.  
+- **forEach()**: Used when we want to perform a function on all elements of a loop. It is simply a loop.  
+- **filter()**: Used for selecting or filtering elements from an array. Returns a new array with the selected elements.  
+
+---
+
+## 3) What are arrow functions in ES6?
+
+Arrow functions are a simpler way of writing functions.  
+They do not support the `arguments` object and `this` works differently compared to normal functions.  
+
+```js
+const add = (a, b) => a + b;
+
+## 4) How does destructuring assignment work in ES6?
+
+        Destructuring assignment allow initializing multiple variable from array or object. It is a clean and readable way of extracting data from array or object.
+                const num = [1, 2, 3];
+                const [a, b] = num; // a = 1, b = 2
+       
+## 5) Explain template literals in ES6. How are they different from string concatenation?
+
+        Template literals provide us a more readable code while making a string. It will allow us use variable without using "+" and will allow us to write multiline strings. We have to use (`) instead of (") or (').
+                const sub = 'World';
+                const greeting = `Hello ${sub}!`; //Hello World!
